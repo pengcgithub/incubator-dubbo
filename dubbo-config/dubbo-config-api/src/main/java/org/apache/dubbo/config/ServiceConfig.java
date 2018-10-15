@@ -64,6 +64,7 @@ import static org.apache.dubbo.common.utils.NetUtils.isInvalidPort;
 
 /**
  * ServiceConfig
+ * 服务提供者暴露服务配置类
  *
  * @export
  */
@@ -182,6 +183,11 @@ public class ServiceConfig<T> extends AbstractServiceConfig {
         return urls;
     }
 
+    @Override
+    public Boolean getExport() {
+        return super.getExport();
+    }
+
     @Parameter(excluded = true)
     public boolean isExported() {
         return exported;
@@ -193,6 +199,7 @@ public class ServiceConfig<T> extends AbstractServiceConfig {
     }
 
     public synchronized void export() {
+        // 当 export 或者 delay 未配置，从 ProviderConfig 对象读取。
         if (provider != null) {
             if (export == null) {
                 export = provider.getExport();
@@ -201,10 +208,13 @@ public class ServiceConfig<T> extends AbstractServiceConfig {
                 delay = provider.getDelay();
             }
         }
+
+        // 不暴露服务( export = false ) ，则不进行暴露服务逻辑。
         if (export != null && !export) {
             return;
         }
 
+        // 延迟暴露
         if (delay != null && delay > 0) {
             delayExportExecutor.schedule(new Runnable() {
                 @Override
@@ -212,12 +222,14 @@ public class ServiceConfig<T> extends AbstractServiceConfig {
                     doExport();
                 }
             }, delay, TimeUnit.MILLISECONDS);
+        // 立即暴露
         } else {
             doExport();
         }
     }
 
     protected synchronized void doExport() {
+        // 检查是否可以暴露，若可以，标记已经暴露。
         if (unexported) {
             throw new IllegalStateException("Already unexported!");
         }
@@ -225,10 +237,13 @@ public class ServiceConfig<T> extends AbstractServiceConfig {
             return;
         }
         exported = true;
+        // 校验接口名非空
         if (interfaceName == null || interfaceName.length() == 0) {
             throw new IllegalStateException("<dubbo:service interface=\"\" /> interface not allow null!");
         }
+        // 拼接属性配置（环境变量 + properties 属性）到 ProviderConfig 对象
         checkDefault();
+        // 从 ProviderConfig 对象中，读取 application、module、registries、monitor、protocols 配置对象。
         if (provider != null) {
             if (application == null) {
                 application = provider.getApplication();

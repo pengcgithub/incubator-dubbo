@@ -29,6 +29,7 @@ import java.util.Arrays;
 
 /**
  * ProviderConfig
+ * 提供者缺省值配置
  *
  * @export
  * @see org.apache.dubbo.config.ProtocolConfig
