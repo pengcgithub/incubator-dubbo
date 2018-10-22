@@ -4,3 +4,14 @@
 
 - [1.架构原理](./document/1.架构原理.md)
 - [2.SPI](./document/2.SPI.md)
+- SPI机制的adpative原理
+- dubbo的IOC和AOP原理
+- dubbo的动态编译
+- 如何与spring完美融合
+- 服务发布-原理探索
+- 服务发布-netty的服务暴露
+
+## 参考资料
+- [肥朝-dubbo源码解析](https://www.jianshu.com/nb/6137390)
+- [芋道源码](http://svip.iocoder.cn/categories/Dubbo/)
+- 深度解剖Dubbo源码视频课程
