@@ -30,6 +30,7 @@ import java.util.Arrays;
 /**
  * ProviderConfig
  * 提供者缺省值配置
+ * <a>https://dubbo.gitbooks.io/dubbo-user-book/references/xml/dubbo-provider.html</a>
  *
  * @export
  * @see org.apache.dubbo.config.ProtocolConfig

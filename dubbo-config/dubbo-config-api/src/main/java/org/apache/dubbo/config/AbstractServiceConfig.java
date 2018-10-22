@@ -25,6 +25,9 @@ import java.util.List;
 
 /**
  * AbstractServiceConfig
+ * 抽象服务配置类
+ *
+ * <a>https://dubbo.gitbooks.io/dubbo-user-book/references/xml/dubbo-service.html</a>
  *
  * @export
  */

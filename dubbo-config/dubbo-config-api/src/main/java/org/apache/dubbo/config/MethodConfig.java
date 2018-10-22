@@ -23,6 +23,15 @@ import java.util.List;
 
 /**
  * MethodConfig
+ * 方法配置
+ *
+ * <a>https://dubbo.gitbooks.io/dubbo-user-book/references/xml/dubbo-method.html</a>
+ *
+ * <pre>
+ *   <dubbo:reference interface="com.xxx.XxxService">
+ *      <dubbo:method name="findXxx" timeout="3000" retries="2" />
+ *   </dubbo:reference>
+ * </pre>
  *
  * @export
  */

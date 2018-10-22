@@ -189,6 +189,8 @@ public abstract class AbstractConfig implements Serializable {
     }
 
     /**
+     * 将配置对象的属性，添加到参数集合
+     *
      * @param parameters 参数集合。实际上，该集合会用于 URL.parameters
      * @param config 配置对象
      * @param prefix 属性前缀。用于配置项添加到 parameters 中时的前缀
