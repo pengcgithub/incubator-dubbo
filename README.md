@@ -4,7 +4,7 @@
 
 - [1.架构原理](./document/1.架构原理.md)
 - [2.SPI](./document/2.SPI.md)
-- 3.SPI机制的adpative原理
+- [3.SPI机制的adpative原理](./document/3.SPI机制的adpative原理.md)
 - 4.dubbo的IOC和AOP原理
 - 5.dubbo的动态编译
 - 6.如何与spring完美融合
