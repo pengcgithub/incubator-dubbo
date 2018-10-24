@@ -312,8 +312,8 @@ public class ExtensionLoader<T> {
     }
 
     /**
-     * Find the extension with the given name. If the specified name is not found, then {@link IllegalStateException}
-     * will be thrown.
+     * 返回指定名字的扩展。如果指定名字的扩展不存在，则抛异常 {@link IllegalStateException}.返回指定名字的扩展。
+     * 如果指定名字的扩展不存在，则抛异常 {@link IllegalStateException}.
      */
     @SuppressWarnings("unchecked")
     public T getExtension(String name) {
@@ -768,6 +768,7 @@ public class ExtensionLoader<T> {
     @SuppressWarnings("unchecked")
     private T createAdaptiveExtension() {
         try {
+            // TODO 进入IOC的反转控制模式，实现了动态入注
             return injectExtension((T) getAdaptiveExtensionClass().newInstance());
         } catch (Exception e) {
             throw new IllegalStateException("Can not create adaptive extension " + type + ", cause: " + e.getMessage(), e);
