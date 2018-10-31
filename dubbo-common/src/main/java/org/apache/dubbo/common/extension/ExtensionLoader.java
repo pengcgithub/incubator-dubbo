@@ -74,7 +74,10 @@ public class ExtensionLoader<T> {
 
     // ==============================
 
-    // 构造器  初始化时要得到的接口名
+    /**
+     * 拓展接口。
+     * 例如，Protocol
+     */
     private final Class<?> type;
 
     /**
@@ -85,6 +88,13 @@ public class ExtensionLoader<T> {
      */
     private final ExtensionFactory objectFactory;
 
+    /**
+     * 缓存的拓展名与拓展类的映射。
+     *
+     * 和 {@link #cachedClasses} 的 KV 对调。
+     *
+     * 通过 {@link #loadExtensionClasses} 加载
+     */
     private final ConcurrentMap<Class<?>, String> cachedNames = new ConcurrentHashMap<Class<?>, String>();
 
     private final Holder<Map<String, Class<?>>> cachedClasses = new Holder<Map<String, Class<?>>>();
@@ -577,13 +587,20 @@ public class ExtensionLoader<T> {
         return clazz;
     }
 
+    /**
+     * 获得拓展实现类数组
+     * @return 拓展实现类数组
+     */
     private Map<String, Class<?>> getExtensionClasses() {
+        // 从缓存中，获得拓展实现类数组
         Map<String, Class<?>> classes = cachedClasses.get();
         if (classes == null) {
             synchronized (cachedClasses) {
                 classes = cachedClasses.get();
                 if (classes == null) {
+                    // 从配置文件中，加载拓展实现类数组
                     classes = loadExtensionClasses();
+                    // 设置到缓存中
                     cachedClasses.set(classes);
                 }
             }
@@ -592,10 +609,12 @@ public class ExtensionLoader<T> {
     }
 
     /**
+     * 加载拓展实现类数组
+     *
      * synchronized in getExtensionClasses
      * 加载扩展class
      *
-     * @return
+     * @return 拓展实现类数组
      */
     private Map<String, Class<?>> loadExtensionClasses() {
         final SPI defaultAnnotation = type.getAnnotation(SPI.class);

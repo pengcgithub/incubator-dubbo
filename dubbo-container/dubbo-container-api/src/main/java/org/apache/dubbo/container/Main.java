@@ -50,12 +50,14 @@ public class Main {
     public static void main(String[] args) {
         try {
             if (args == null || args.length == 0) {
+                // 读取要加载的容器（dubbo.container）
                 String config = ConfigUtils.getProperty(CONTAINER_KEY, loader.getDefaultExtensionName());
                 args = Constants.COMMA_SPLIT_PATTERN.split(config);
             }
 
             final List<Container> containers = new ArrayList<Container>();
             for (int i = 0; i < args.length; i++) {
+                // 取出指定名称的扩展类
                 containers.add(loader.getExtension(args[i]));
             }
             logger.info("Use container type(" + Arrays.toString(args) + ") to run dubbo serivce.");
