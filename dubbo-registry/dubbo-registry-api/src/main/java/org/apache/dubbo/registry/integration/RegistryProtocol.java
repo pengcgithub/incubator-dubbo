@@ -135,15 +135,20 @@ public class RegistryProtocol implements Protocol {
         URL registryUrl = getRegistryUrl(originInvoker);
 
         //registry provider
+        // zookeeper 连接
         final Registry registry = getRegistry(originInvoker);
+        // 订阅override数据
+        // FIXME 提供者订阅时，会影响同一JVM暴露服务，又引用同一服务的场景，因为subscribed以服务名为缓存的key，导致订阅信息覆盖。
         final URL registeredProviderUrl = getRegisteredProviderUrl(originInvoker);
 
         //to judge to delay publish whether or not
+        //判断是否延迟发布
         boolean register = registeredProviderUrl.getParameter("register", true);
 
         ProviderConsumerRegTable.registerProvider(originInvoker, registryUrl, registeredProviderUrl);
 
         if (register) {
+            // 创建节点
             register(registryUrl, registeredProviderUrl);
             ProviderConsumerRegTable.getProviderWrapper(originInvoker).setReg(true);
         }

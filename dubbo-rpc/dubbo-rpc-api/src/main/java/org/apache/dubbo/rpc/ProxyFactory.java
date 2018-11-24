@@ -23,6 +23,11 @@ import org.apache.dubbo.common.extension.SPI;
 
 /**
  * ProxyFactory. (API/SPI, Singleton, ThreadSafe)
+ * 就是为了获取一个接口的代理类，例如获取一个远程接口的代理类。
+ * 它有两个方法，代表两个作用
+ * a.getInvoker
+ * b.getProxy
+ *
  */
 @SPI("javassist")
 public interface ProxyFactory {

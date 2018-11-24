@@ -34,6 +34,7 @@ import java.util.regex.Matcher;
 
 /**
  * Wrapper.
+ * 类似于spring的beanWrapper，它就是包装了一个接口或则一个类，可以通过wrapper对实例对象进行赋值以及制定方法的调用。
  */
 public abstract class Wrapper {
     private static final Map<Class<?>, Wrapper> WRAPPER_MAP = new ConcurrentHashMap<Class<?>, Wrapper>(); //class wrapper map

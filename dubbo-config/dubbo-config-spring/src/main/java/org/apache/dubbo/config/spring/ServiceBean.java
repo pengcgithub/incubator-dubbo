@@ -44,6 +44,9 @@ import java.util.Map;
 /**
  * ServiceFactoryBean
  *
+ * 继承：
+ * ApplicationListener ： spring的上下文监听接口，只实现onApplicationEvent方法
+ *
  * @export
  */
 public class ServiceBean<T> extends ServiceConfig<T> implements InitializingBean, DisposableBean, ApplicationContextAware, ApplicationListener<ContextRefreshedEvent>, BeanNameAware {

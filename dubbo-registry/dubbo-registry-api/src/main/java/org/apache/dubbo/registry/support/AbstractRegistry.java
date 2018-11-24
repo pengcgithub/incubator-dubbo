@@ -89,7 +89,10 @@ public abstract class AbstractRegistry implements Registry {
                 }
             }
         }
+        // dubbo-registry-localhost.cache
+        // 接口对应的注册中心的地址。
         this.file = file;
+        // dubbo-registry-localhost.cache文件中的内容加载为properties
         loadProperties();
         notify(url.getBackupUrls());
     }

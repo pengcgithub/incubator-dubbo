@@ -186,6 +186,11 @@ public abstract class AbstractInterfaceConfig extends AbstractMethodConfig {
         }
     }
 
+    /**
+     * 从dubbo.properties中组装registry的URL信息
+     * @param provider
+     * @return
+     */
     protected List<URL> loadRegistries(boolean provider) {
         checkRegistry();
         List<URL> registryList = new ArrayList<URL>();

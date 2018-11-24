@@ -37,10 +37,13 @@ import java.util.concurrent.CompletableFuture;
 public abstract class AbstractProxyInvoker<T> implements Invoker<T> {
     Logger logger = LoggerFactory.getLogger(AbstractProxyInvoker.class);
 
+    // 指向服务提供者
     private final T proxy;
 
+    // 服务的接口类型
     private final Class<T> type;
 
+    // 携带服务地址、端口等多种信息的自定义URL对象
     private final URL url;
 
     public AbstractProxyInvoker(T proxy, Class<T> type, URL url) {
@@ -82,6 +85,7 @@ public abstract class AbstractProxyInvoker<T> implements Invoker<T> {
     public Result invoke(Invocation invocation) throws RpcException {
         RpcContext rpcContext = RpcContext.getContext();
         try {
+            // 这里的doInvoke是抽象方法，由子类实现。
             Object obj = doInvoke(proxy, invocation.getMethodName(), invocation.getParameterTypes(), invocation.getArguments());
             if (RpcUtils.isFutureReturnType(invocation)) {
                 return new AsyncRpcResult((CompletableFuture<Object>) obj);

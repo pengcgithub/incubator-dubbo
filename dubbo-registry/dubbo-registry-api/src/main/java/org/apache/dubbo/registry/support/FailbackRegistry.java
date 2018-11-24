@@ -70,6 +70,7 @@ public abstract class FailbackRegistry extends AbstractRegistry {
             @Override
             public void run() {
                 // Check and connect to the registry
+                // 建立线程池，检测并连接注册中心，如果失败就重连。
                 try {
                     retry();
                 } catch (Throwable t) { // Defensive fault tolerance
@@ -134,6 +135,7 @@ public abstract class FailbackRegistry extends AbstractRegistry {
         failedUnregistered.remove(url);
         try {
             // Sending a registration request to the server side
+            // 向服务器端发送注册请求
             doRegister(url);
         } catch (Exception e) {
             Throwable t = e;

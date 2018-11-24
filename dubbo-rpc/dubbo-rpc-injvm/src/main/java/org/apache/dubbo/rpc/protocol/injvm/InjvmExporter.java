@@ -35,6 +35,8 @@ class InjvmExporter<T> extends AbstractExporter<T> {
         super(invoker);
         this.key = key;
         this.exporterMap = exporterMap;
+        // 最终目的
+        // key=com.alibaba.dubbo.DemoService, this=injvmExporter
         exporterMap.put(key, this);
     }
 
