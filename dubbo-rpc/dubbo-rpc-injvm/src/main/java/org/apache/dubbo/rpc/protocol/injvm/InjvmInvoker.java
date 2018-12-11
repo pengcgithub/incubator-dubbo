@@ -32,8 +32,10 @@ import java.util.Map;
  */
 class InjvmInvoker<T> extends AbstractInvoker<T> {
 
+    // 属性，服务键
     private final String key;
 
+    // Exporter 集合。在 InjvmInvoker#invoke(invocation) 方法中，通过该 Invoker 的 key 属性，获得对应的 Exporter 对象。
     private final Map<String, Exporter<?>> exporterMap;
 
     InjvmInvoker(Class<T> type, URL url, String key, Map<String, Exporter<?>> exporterMap) {
@@ -44,6 +46,7 @@ class InjvmInvoker<T> extends AbstractInvoker<T> {
 
     @Override
     public boolean isAvailable() {
+        // 判断是否有 Exporter 对象
         InjvmExporter<?> exporter = (InjvmExporter<?>) exporterMap.get(key);
         if (exporter == null) {
             return false;

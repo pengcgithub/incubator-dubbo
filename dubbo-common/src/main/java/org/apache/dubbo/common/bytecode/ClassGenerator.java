@@ -44,6 +44,7 @@ import java.util.concurrent.atomic.AtomicLong;
 
 /**
  * ClassGenerator
+ * 类生成器，基于 Javassist 实现
  */
 public final class ClassGenerator {
     private static final AtomicLong CLASS_NAME_COUNTER = new AtomicLong(0);
