@@ -66,9 +66,18 @@ public class RegistryDirectory<T> extends AbstractDirectory<T> implements Notify
 
     private static final ConfiguratorFactory configuratorFactory = ExtensionLoader.getExtensionLoader(ConfiguratorFactory.class).getAdaptiveExtension();
     private final String serviceKey; // Initialization at construction time, assertion not null
+    /**
+     * 服务类型，例如：com.alibaba.dubbo.demo.DemoService
+     */
     private final Class<T> serviceType; // Initialization at construction time, assertion not null
+    /**
+     * Consumer URL 的配置项 Map
+     */
     private final Map<String, String> queryMap; // Initialization at construction time, assertion not null
     private final URL directoryUrl; // Initialization at construction time, assertion not null, and always assign non null value
+    /**
+     * 服务方法数组
+     */
     private final String[] serviceMethods;
     private final boolean multiGroup;
     private Protocol protocol; // Initialization at the time of injection, the assertion is not null
@@ -154,7 +163,9 @@ public class RegistryDirectory<T> extends AbstractDirectory<T> implements Notify
     }
 
     public void subscribe(URL url) {
+        // 设置消费者 URL
         setConsumerUrl(url);
+        // 向注册中心，发起订阅
         registry.subscribe(url, this);
     }
 

@@ -48,8 +48,14 @@ public abstract class AbstractClusterInvoker<T> implements Invoker<T> {
             .getLogger(AbstractClusterInvoker.class);
     protected final Directory<T> directory;
 
+    /**
+     * 集群时是否排除非可用( available )的 Invoker ，默认为 true
+     */
     protected final boolean availablecheck;
 
+    /**
+     * 是否已经销毁
+     */
     private AtomicBoolean destroyed = new AtomicBoolean(false);
 
     private volatile Invoker<T> stickyInvoker = null;

@@ -374,6 +374,12 @@ public abstract class AbstractRegistry implements Registry {
         }
     }
 
+    /**
+     * 通知监听器，监听URL变化
+     * @param url 消费者URL
+     * @param listener 监听器
+     * @param urls 通知的URL 变化结果（全量数据）
+     */
     protected void notify(URL url, NotifyListener listener, List<URL> urls) {
         if (url == null) {
             throw new IllegalArgumentException("notify url == null");
@@ -409,11 +415,13 @@ public abstract class AbstractRegistry implements Registry {
             notified.putIfAbsent(url, new ConcurrentHashMap<String, List<URL>>());
             categoryNotified = notified.get(url);
         }
+        // [分类循环] 处理通知的URL结果
         for (Map.Entry<String, List<URL>> entry : result.entrySet()) {
             String category = entry.getKey();
             List<URL> categoryList = entry.getValue();
             categoryNotified.put(category, categoryList);
             saveProperties(url);
+            // 通知监听器
             listener.notify(categoryList);
         }
     }

@@ -318,7 +318,9 @@ public class RegistryProtocol implements Protocol {
                         + "," + Constants.CONFIGURATORS_CATEGORY
                         + "," + Constants.ROUTERS_CATEGORY));
 
+        // 创建 Invoker 对象
         Invoker invoker = cluster.join(directory);
+        // 向本地注册表，注册消费者
         ProviderConsumerRegTable.registerConsumer(invoker, url, subscribeUrl, directory);
         return invoker;
     }

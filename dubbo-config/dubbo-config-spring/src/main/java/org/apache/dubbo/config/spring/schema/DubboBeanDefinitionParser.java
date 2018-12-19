@@ -75,7 +75,8 @@ public class DubboBeanDefinitionParser implements BeanDefinitionParser {
     private static BeanDefinition parse(Element element, ParserContext parserContext, Class<?> beanClass, boolean required) {
         RootBeanDefinition beanDefinition = new RootBeanDefinition();
         beanDefinition.setBeanClass(beanClass);
-        beanDefinition.setLazyInit(false);
+        beanDefinition.setLazyInit(false); //延迟初始化，引用初始化则需<dubbo:reference ... init="true" />配置
+        // 解析配置对象的 id 。若不存在，则进行生成。
         String id = element.getAttribute("id");
         if ((id == null || id.length() == 0) && required) {
             String generatedBeanName = element.getAttribute("name");
@@ -90,6 +91,7 @@ public class DubboBeanDefinitionParser implements BeanDefinitionParser {
                 generatedBeanName = beanClass.getName();
             }
             id = generatedBeanName;
+            // 若 id 已存在，通过自增序列，解决重复。
             int counter = 2;
             while (parserContext.getRegistry().containsBeanDefinition(id)) {
                 id = generatedBeanName + (counter++);
@@ -99,7 +101,9 @@ public class DubboBeanDefinitionParser implements BeanDefinitionParser {
             if (parserContext.getRegistry().containsBeanDefinition(id)) {
                 throw new IllegalStateException("Duplicate spring bean id " + id);
             }
+            // 添加到 Spring 的注册表
             parserContext.getRegistry().registerBeanDefinition(id, beanDefinition);
+            // 设置 Bean 的 `id` 属性值
             beanDefinition.getPropertyValues().addPropertyValue("id", id);
         }
         if (ProtocolConfig.class.equals(beanClass)) {
